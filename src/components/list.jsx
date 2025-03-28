@@ -1,15 +1,15 @@
 import Item from "./item"
 
-const List = (props) => {
-    return (
+const List = ({list}) => {
+  return (
       <ul>
-        {
-          props.list.map( function ( item ) {
-            return <Item key={item.id} item = {item}/>
-          })
-        }
+          {
+              list.map( function ( {id , ...item} ) { // seprate method 
+                  return <Item key={id} {...item} />
+              })
+          }
       </ul>
-    )
+  )
 }
 
 export default List;
