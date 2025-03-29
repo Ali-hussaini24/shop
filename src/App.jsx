@@ -1,6 +1,7 @@
 import List from './components/list';
-import Search from './components/search';
+import InputWhitLabel from './components/InputWhitLabel';
 import { useEffect, useState } from "react";
+import useStorageState from './hooks/useStorageState';
 
 const title = "Hallo welt"
 
@@ -27,15 +28,11 @@ const App = () => {
       }
     ]
 
-    const [textTerm , setTextTerm] = useState(localStorage.getItem('search') || '');    // State function : for re-reloading // controlled state.
+    const [textTerm , setTextTerm] = useStorageState('search' , '');    // State function : for re-reloading // controlled state.
 
     const backhandler = (event) => {
         setTextTerm(event.target.value);
     }
-
-    useEffect(() => {
-      localStorage.setItem('search' , textTerm);
-    } , [textTerm])
 
     const filterdItem = datalist.filter((item) => {
         return item.title.toLowerCase().includes(textTerm.toLowerCase());
@@ -44,8 +41,8 @@ const App = () => {
     return (
         <div>
             <h1>{title}</h1>
+            <InputWhitLabel id= "search" label= "Search" value = {textTerm} onInputChange = {backhandler} />
             <List list = {filterdItem} />
-            <Search Search = {textTerm} onSearch = {backhandler} />
         </div>
     )
 }
