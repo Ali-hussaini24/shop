@@ -7,7 +7,7 @@ const title = "Hallo welt"
 
 const App = () => {
 
-    const datalist = [
+    const initialDatalist = [
         {
             id : 1,
             title : "React",
@@ -28,7 +28,29 @@ const App = () => {
       }
     ]
 
-    const [textTerm , setTextTerm] = useStorageState('search' , '');    // State function : for re-reloading // controlled state.
+    const [datalist , setDatalist] = useState([]);
+    const [textTerm , setTextTerm] = useStorageState('search' , '');
+
+    const getAsyncDatalist = () => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({data : {datalist : initialDatalist}})
+            }, 2000);
+        })
+    }
+
+    useEffect(() => {
+        getAsyncDatalist().then((result) => {
+            setDatalist(result.data.datalist)
+        })
+    } , [])
+
+    const handleRemoveDatalist = (id) => {
+        const newData = datalist.filter((item) => {
+            return item.id !== id;
+        })
+        setDatalist(newData)
+    } 
 
     const backhandler = (event) => {
         setTextTerm(event.target.value);
@@ -42,7 +64,7 @@ const App = () => {
         <div>
             <h1>{title}</h1>
             <InputWhitLabel id= "search" label= "Search" value = {textTerm} onInputChange = {backhandler} />
-            <List list = {filterdItem} />
+            <List list = {filterdItem} onRemoveItem = {handleRemoveDatalist} />
         </div>
     )
 }

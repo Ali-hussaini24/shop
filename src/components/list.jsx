@@ -1,11 +1,11 @@
 import Item from "./item"
 
-const List = ({list}) => {
+const List = ({list , onRemoveItem}) => {
   return (
       <ul>
           {
-              list.map( function ( {id , ...item} ) { // seprate method 
-                  return <Item key={id} {...item} />
+              list.map( function (item) { // seprate method 
+                  return <Item key={item.id} {...item} onRemoveItem = {onRemoveItem} />
               })
           }
       </ul>

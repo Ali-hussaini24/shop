@@ -11,13 +11,19 @@
 
 // *************** Spread Opertor method for props
 
-const Item = ({title, price, count }) => {
+const Item = ({id ,title, price, count, onRemoveItem}) => {
+  
+  // const handleRemoveItem = () => {
+  //   onRemoveItem(id)
+  // }
+
   return (
       <li>
           <span>{title}</span>
-          <span>{price}</span>
+          <span>{price}</span>  
           <span>{count}</span>
-      </li>
+          <button onClick={() => onRemoveItem(id)}>Remove</button>   
+      </li>                                                                // inline handler method
   )
 }
 
